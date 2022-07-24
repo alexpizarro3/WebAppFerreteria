@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"; //Importa Browser, Routes y Route desde dom
+import {Compras, Dashboard, Login, Productos, Usuarios, Ventas} from "./Screens/Login"; //Importa todas las Screens
 
-function App() {
+export default function App() { //rfc para crear la funcion inicial
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}/>
+        <Route path="/Usuarios" element={<Usuarios />}/>
+        <Route path="/Productos" element= {<Productos />}/>
+        <Route path="/Compras" element={<Compras />}/>
+        <Route path="/Ventas" element={<Ventas />}/>
+        <Route path="/Dashboard" element={<Dashboard />}/>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
