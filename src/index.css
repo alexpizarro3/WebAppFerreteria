@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url(./Images/La\ Cochinita\ Fondo.jpg); /*Imagen de fondo de la app*/
+  background-size: cover; /*Cubre el total de la pantalla*/
 }
 
 code {
