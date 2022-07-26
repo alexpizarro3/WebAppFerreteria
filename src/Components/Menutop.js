@@ -9,7 +9,7 @@ export default function MenuTop() {
             <AppBar position='static' color='transparent'>
                 <Container>
                     <Toolbar>
-                        <Typography variant="h2" component="div" gutterBottom sx={{ marginLeft: '20rem', marginTop: '3px',fontSize: '47px', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius:1 }}>
+                        <Typography variant="h2" component="div" gutterBottom sx={{flexGrow: 1, marginLeft: '20rem', marginTop: '3px',fontSize: '47px', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius:1 }}>
                             Ferreteria la Cochinita
                         </Typography>
                         <Styledbackicon></Styledbackicon>
