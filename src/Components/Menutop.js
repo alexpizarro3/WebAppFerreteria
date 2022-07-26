@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Box, Typography, Container } from '@mui/material';
 import Styledlogouticon from './Styledlogouticon'
 import Styledbackicon from './Styledbackicon';
-import { Link } from 'react-router-dom';
+
 
 export default function MenuTop() {
     return (
@@ -9,8 +9,8 @@ export default function MenuTop() {
             <AppBar position='static' color='transparent'>
                 <Container>
                     <Toolbar>
-                        <Typography sx={{ flexGrow: 1, marginLeft: '29%', fontSize: '47px' }}>
-                            <Link to='/' style={{ color: '#c1121f', textDecoration: 'none', borderRadius: 2 }}>Ferreteria la Cochinita</Link>
+                        <Typography variant="h2" component="div" gutterBottom sx={{ marginLeft: '29%', marginTop: '3px',fontSize: '47px', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius:1 }}>
+                            Ferreteria la Cochinita
                         </Typography>
                         <Styledbackicon></Styledbackicon>
                         <Styledlogouticon></Styledlogouticon>

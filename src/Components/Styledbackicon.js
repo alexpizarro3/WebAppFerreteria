@@ -5,7 +5,7 @@ import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlin
 function Styledbackicon() {
   return (
     <div>
-      <StyledBackIcon  sx={{color: '#0a100d', fontSize: 50, paddingRight: 3}}></StyledBackIcon>
+      <StyledBackIcon  sx={{color: '#0a100d', fontSize: 50, paddingRight: 3, marginLeft: '10rem'}}></StyledBackIcon>
     </div>
   )
 }

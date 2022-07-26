@@ -10,17 +10,17 @@ export default function Login() {
       spacing={0}
       direction="column"
       alignItems="center"
-      marginTop="2%"
+      marginTop="1%"
       style={{ minHeight: '100vh' }}
     >
       <Grid item xs={3}>
-        <CssTextField label="Cédula" helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 300, bgcolor: "#fefae0", borderRadius: 1, boxShadow: 10 }} />
+        <CssTextField label="Cédula" helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 300, "& label": {color: "black", fontSize: "20px"} , bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} />
         <br />
         <br />
-        <CssTextField label="Contraseña" helperText="Contraseña max 20 caracteres" id="custom-css-outlined-input" variant="filled" sx={{ width: 300, bgcolor: "#fefae0", borderRadius: 1 , boxShadow: 10}} />
+        <CssTextField label="Contraseña" helperText="Contraseña max 20 caracteres" id="custom-css-outlined-input" variant="filled" sx={{ width: 300, "& label": {color: "black", fontSize: "20px"} ,bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1 , boxShadow: 10}} />
         <br />
         <br />
-        <Button variant="contained" color="primary" sx={{ width: 300, bgcolor: "#2b2d42"}}>Ingresar</Button>
+        <Button variant="contained" color="primary" sx={{ width: 300, bgcolor: "rgba(0, 48, 73, 0.9)"}}>Ingresar</Button>
       </Grid>
     </Grid>
   )
@@ -29,6 +29,9 @@ export default function Login() {
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
     color: 'blue',
+  },
+  '& label.Mui-selected': {
+    color: 'black',
   },
   '& .MuiInput-underline:after': {
     borderBottomColor: 'green',
