@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 function Styledlogouticon() {
   return (
     <Link to="/">
-      <StyledLogoutIcon sx={{ color: '#0a100d', fontSize: 45, marginLeft: '1rem' }}></StyledLogoutIcon>
+      <StyledLogoutIcon sx={{ color: "rgba(0, 48, 73, 0.9)", fontSize: 45, marginLeft: '1rem' }}></StyledLogoutIcon>
     </Link>
   )
 }
