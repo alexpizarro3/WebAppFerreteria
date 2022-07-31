@@ -1,9 +1,12 @@
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { Grid, Button } from '@mui/material';
+import { obtenerUsuario } from '../Components/Api';
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
-export default function Login() {
 
+export default function Login() {
+  const navigate = useNavigate();
   const [login, setLogin] = useState({ //funcion que almacena los valores del login en usestate
     cedula: '',
     password: '',
@@ -14,14 +17,27 @@ export default function Login() {
     setLogin({ ...login, [e.target.name]: e.target.value }); //Almacena los valores del onChange en el useState
   };
 
-  console.log(process.env.REACT_APP_USERS);
+  const dataUser = async (cedula, password) => { //Funcion que obtiene del api los usuarios
+    const loadData = await obtenerUsuario(cedula, password);
+    setLogin(loadData);
+    if (typeof loadData.message === 'undefined') {
+      console.log(loadData);
+      navigate('/Dashboard'); //Navega hacia la pantalla de PowerBiScreen
+    } else {
+      console.log(loadData);
+      console.log(cedula, password);
+      window.location.reload();
+    }
+  }
+
   const handleSubmit = async (e) => { //Funcion que anula el actualizar el form al dar click en el boton de login
     e.preventDefault(); //Evita la accion inicial del buton en el form
+    dataUser(login.cedula, login.password);
     //console.log(login); //Muestra el objeto obtenido del useState en consola con los datos de cedula y password
-    const res = await fetch(process.env.REACT_APP_USERS + login.cedula + '/' + login.password);
+    /* const res = await fetch(process.env.REACT_APP_USERS + login.cedula + '/' + login.password);
     console.log(res); //
     const data = await res.json();
-    console.log(data); //
+    console.log(data); // */
   };
 
   return (
