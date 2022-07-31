@@ -21,6 +21,8 @@
     "react-toastify": "^9.0.7",
     "react-transition-group": "^4.4.4",
     "reactstrap": "^9.1.2",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.24",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

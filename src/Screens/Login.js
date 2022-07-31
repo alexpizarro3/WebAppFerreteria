@@ -4,6 +4,7 @@ import { Grid, Button } from '@mui/material';
 import { obtenerUsuario } from '../Components/Api';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import sweetalert from 'sweetalert';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,11 +23,16 @@ export default function Login() {
     setLogin(loadData);
     if (typeof loadData.message === 'undefined') {
       console.log(loadData);
+      sweetalert( "Credenciales Correctas", { icon: "success"});
       navigate('/Dashboard'); //Navega hacia la pantalla de PowerBiScreen
     } else {
       console.log(loadData);
       console.log(cedula, password);
-      window.location.reload();
+      sweetalert("Credenciales Incorrectas", { icon: "error"  });
+      setTimeout(() => { //Funcion que espera 3 segundos y recarga la ventana
+        window.location.reload();
+      }, 3000);
+      //setTimeout();
     }
   }
 
