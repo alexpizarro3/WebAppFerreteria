@@ -4,9 +4,12 @@ import { Grid, Button } from '@mui/material';
 import { obtenerUsuario } from '../Components/Api';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import Alert from '@mui/material/Alert';
+import { useForm } from "react-hook-form";
 import sweetalert from 'sweetalert';
 
 export default function Login() {
+  const { register, handleSubmit, formState: { errors } } = useForm(); //Para validar el formulario
   const navigate = useNavigate();
   const [login, setLogin] = useState({ //funcion que almacena los valores del login en usestate
     cedula: '',
@@ -36,14 +39,9 @@ export default function Login() {
     }
   }
 
-  const handleSubmit = async (e) => { //Funcion que anula el actualizar el form al dar click en el boton de login
-    e.preventDefault(); //Evita la accion inicial del buton en el form
+  const onSubmit = (e) => { //Funcion que anula el actualizar el form al dar click en el boton de login
+    //e.preventDefault(); //Evita la accion inicial del buton en el form
     dataUser(login.cedula, login.password);
-    //console.log(login); //Muestra el objeto obtenido del useState en consola con los datos de cedula y password
-    /* const res = await fetch(process.env.REACT_APP_USERS + login.cedula + '/' + login.password);
-    console.log(res); //
-    const data = await res.json();
-    console.log(data); // */
   };
 
   return (
@@ -56,12 +54,14 @@ export default function Login() {
       style={{ minHeight: '100vh' }}
     >
       <Grid item xs={3}>
-        <form onSubmit={handleSubmit}>
-          <CssTextField label="Cédula" name='cedula' onChange={handleChange} helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "24px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CssTextField label="Cédula" {...register('cedula', {required: true, minLength:6, maxLength:12 })} onChange={handleChange} helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "24px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
           <br />
+          {errors.cedula?.type === 'required' && <Alert variant= 'standard' severity="error">Este campo es requerido !</Alert> }
           <br />
-          <CssTextField label="Contraseña" name='password' onChange={handleChange} type="password" helperText="Contraseña max 20 caracteres" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "20px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
+          <CssTextField label="Contraseña" {...register('password', {required: true, minLength: 6, maxLength:15 })} onChange={handleChange} type="password" helperText="Contraseña max 20 caracteres" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "20px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
           <br />
+          {errors.password?.type === 'required' && <Alert variant= 'standard' severity="error">Este campo es requerido !</Alert> }
           <br />
           <Button variant="contained" color="primary" type='submit' sx={{ width: 400, bgcolor: "rgba(0, 48, 73, 0.9)" }}>Ingresar</Button>
         </form>
