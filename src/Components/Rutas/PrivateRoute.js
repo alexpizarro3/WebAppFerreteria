@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
-const isLog = false;
-
-const PrivateRoute = ({ component: Component}) => {
-    return isLog ? <Component /> : <Navigate to = '/' /> 
+export const PrivateRoute = ({isLog, children}) => {
+    return (
+        <>
+            {
+                isLog ? children : <Navigate to='/' />
+            }
+        </>
+    )
 }
-
-export default PrivateRoute
