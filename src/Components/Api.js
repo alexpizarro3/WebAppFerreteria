@@ -7,4 +7,10 @@ const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuel
     return await res.json(); //retorna el resulatado en formato json
 };
 
-export { obtenerUsuario };
+const obtenerUsuarios = async () => { //Funcion flecha que devuelve todos los usuarios del backend PERN
+    const data = await fetch(dirUsers); //Aqui se realiza la consulta al API
+    return await data.json(); //retorna el resulatado en formato json
+};
+
+
+export { obtenerUsuarios, obtenerUsuario };

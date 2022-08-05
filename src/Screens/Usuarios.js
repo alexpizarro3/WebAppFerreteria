@@ -1,23 +1,29 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Container, Typography, Box } from '@mui/material'
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
-import DataTable from '../Components/DataTable';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import UserTable from '../Components/UserTable';
+import { Tooltip } from '@mui/material';
+
 
 export default function Usuarios() {
   return (
     <Container >
-      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', marginLeft:'18rem'}}>
+      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', marginLeft: '18rem' }}>
         Usuarios
         <Link to='/dashboard'>
-          <AssessmentOutlinedIcon sx={{ color: 'black', fontSize: 70, marginLeft: '10rem' }}></AssessmentOutlinedIcon>
+          <Tooltip title='Dashboard' placement='left' aria-details='Indicadores'>
+            <AssessmentOutlinedIcon sx={{ color: '#ffe100', fontSize: 70, marginLeft: '10rem' }}></AssessmentOutlinedIcon>
+          </Tooltip>
         </Link>
         <Link to='/productos'>
-          <ConstructionOutlinedIcon sx={{ color: 'black', fontSize: 70, marginLeft: '3rem' }}></ConstructionOutlinedIcon>
+          <Tooltip title='Productos' placement='right' aria-details='Mantenimiento'>
+            <ConstructionOutlinedIcon sx={{ color: '#9a031e', fontSize: 70, marginLeft: '3rem' }}></ConstructionOutlinedIcon>
+          </Tooltip>
         </Link>
       </Typography>
-      <Box>
-        <DataTable />
+      <Box >
+        <UserTable />
       </Box>
     </Container>
   )

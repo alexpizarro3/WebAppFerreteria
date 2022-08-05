@@ -2,11 +2,14 @@ import React from 'react'
 import { styled } from "@mui/system";
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
 import { Link } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 function Styledbackicon() {
   return (
     <Link to='/usuarios'>
-      <StyledBackIcon sx={{ color: "rgba(0, 48, 73, 0.9)", fontSize: 50, paddingRight: 3, marginLeft: '10rem' }}></StyledBackIcon>
+      <Tooltip title="Volver" placement='bottom'>
+        <StyledBackIcon sx={{ color: "rgba(0, 48, 73, 0.9)", fontSize: 50, paddingRight: 3, marginLeft: '10rem' }}></StyledBackIcon>
+      </Tooltip>
     </Link>
   )
 }

@@ -23,9 +23,9 @@ export default function Login({ funcionSetLogValue }) {
 
   const dataUser = async (cedula, password) => { //Funcion que obtiene del api los usuarios
     const loadData = await obtenerUsuario(cedula, password);
+    console.log(loadData); 
     setLogin(loadData);
     if (typeof loadData.message === 'undefined') {
-      console.log(loadData);
       funcionSetLogValue(true);
       sweetalert("Credenciales Correctas", { icon: "success" });
       navigate('/usuarios'); //Navega hacia la pantalla de PowerBiScreen

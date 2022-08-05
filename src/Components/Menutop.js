@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Box, Typography, Container } from '@mui/material';
+import { AppBar, Toolbar, Box, Typography, Container, Tooltip } from '@mui/material';
 import Styledlogouticon from './Styledlogouticon'
 import Styledbackicon from './Styledbackicon';
 
@@ -9,10 +9,10 @@ export default function MenuTop() {
             <AppBar position='static' color='transparent'>
                 <Container>
                     <Toolbar>
-                        <Typography variant="h2" component="div" gutterBottom sx={{flexGrow: 1, marginLeft: '18rem', marginTop: '3px',fontSize: '47px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius:1 }}>
+                        <Typography variant="h2" component="div" gutterBottom sx={{ flexGrow: 1, marginLeft: '18rem', marginTop: '3px', fontSize: '47px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius: 1 }}>
                             Ferreteria la Cochinita
                         </Typography>
-                        <Styledbackicon></Styledbackicon>
+                            <Styledbackicon></Styledbackicon>
                         <Styledlogouticon></Styledlogouticon>
                     </Toolbar>
                 </Container>

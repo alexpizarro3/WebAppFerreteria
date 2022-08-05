@@ -19,7 +19,6 @@ export default function App() { //Menu principal con las rutas principales
   return (
     <BrowserRouter>
       <Menutop />
-      {console.log(isLog)};
       <Container>
         <Routes>
           <Route path='/' element={<Login funcionSetLogValue={setLogValue} />} />
@@ -27,7 +26,6 @@ export default function App() { //Menu principal con las rutas principales
           <Route path='*' element={<Else />} />
         </Routes>
       </Container>
-      {console.log(isLog)};
     </BrowserRouter>
   )
 }
