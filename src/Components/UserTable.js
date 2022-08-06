@@ -3,18 +3,13 @@ import DataTable from './DataTable';
 import { obtenerUsuarios } from '../Components/Api';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
-import Usuarios from '../Screens/Usuarios';
-
-
 
 const UserTable = () => {
 
     const [data, setData] = useState([]);
     const [cellValue, setCellValue] = useState();
-
     const handleClick = (event, cellValues) => {
         setCellValue(cellValues);
-        console.log(cellValues);
     };
 
     const columns = [
@@ -59,7 +54,6 @@ const UserTable = () => {
                 columns={columns}
                 cellValues={cellValue}
             />
-
         </>
     );
 };
