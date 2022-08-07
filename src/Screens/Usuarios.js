@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 import DataTable from '../Components/DataTable';
 import styled from '@emotion/styled';
-import { obtenerUsuarios, postUser } from '../Components/Api'
+import { obtenerUsuarios, postUser, putUser } from '../Components/Api'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
-
 
 const Usuarios = () => {
   const styles = useStyles(); //Aqui se almacenan los estilos
@@ -31,8 +30,9 @@ const Usuarios = () => {
 
   const handleClick = (event, cellValue, modo) => {
     setCellData(cellValue.row);
+    console.log(cellData);
     setNewUser(cellValue.row);
-    seleccionarUsuario(cellData, modo);
+    seleccionarUsuario(cellValue.row, modo);
   };
 
   const columns = [
@@ -50,9 +50,9 @@ const Usuarios = () => {
       }
     },
     {
-      field: 'borrar', headerName: 'Borrar', width: 60, renderCell: (cellValues) => {
+      field: 'borrar', headerName: 'Borrar', width: 60, renderCell: (cellValue) => {
         return (
-          <DeleteOutlinedIcon onClick={(event) => { handleClick(event, cellValues, "borrar") }} sx={{ color: 'red', bgcolor: 'white', borderRadius: '4px' }} >
+          <DeleteOutlinedIcon onClick={(event) => { handleClick(event, cellValue, "borrar") }} sx={{ color: 'red', bgcolor: 'white', borderRadius: '4px' }} >
           </DeleteOutlinedIcon>
 
         );
@@ -90,8 +90,8 @@ const Usuarios = () => {
   }
 
 
-  const seleccionarUsuario = (user, modo) => {
-    console.log(user);
+  const seleccionarUsuario = (userSel, modo) => {
+    setCellData(userSel);
     (modo === 'editar') && abrirCerrarModalModificar();
   }
 
@@ -101,6 +101,20 @@ const Usuarios = () => {
     abrirCerrarModalInsertar();
   };
 
+  const peticionPut = async () => {
+    let valNueUser = {};
+    Object.assign(valNueUser, newUser);
+    valNueUser.userCedula = newUser.cedula;
+    valNueUser.userNombre = newUser.nombre;
+    valNueUser.userApellidos = newUser.apellidos;
+    valNueUser.password = newUser.password;
+    delete valNueUser.idUser;
+    delete valNueUser.userRole;
+    console.log(valNueUser);
+    const res = await putUser(newUser.userCedula, valNueUser);
+    console.log(res);
+    abrirCerrarModalModificar();
+  };
 
   const bodyInsertar = (
     <div className={styles.modal}>
@@ -127,17 +141,17 @@ const Usuarios = () => {
       <h3>Editar Usuario</h3>
       <TextField required type="number" label="Cedula" name="cedula" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userCedula} ></TextField>
       <br />
-      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem'}} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userNombre} />
+      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userNombre} />
       <br />
       <TextField label="Apellidos" name="apellidos" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userApellidos} />
       <br />
       <TextField label="Role" name="role" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userRole} />
       <br />
-      <TextField label="Password" name="password" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem'}}} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.password.trimEnd()} />
+      <TextField label="Password" name="password" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.password.trimEnd()} />
       <br /><br />
       <div align="center">
-        <Button color="primary">Editar</Button>
-        <Button onClick={() => abrirCerrarModalModificar()}>Cancelar</Button>
+        <Button onClick={() => peticionPut()} variant='contained' color="primary" sx={{ marginRight: '1rem' }}>Editar</Button>
+        <Button variant='contained' onClick={() => abrirCerrarModalModificar()}>Cancelar</Button>
       </div>
     </div>
   )

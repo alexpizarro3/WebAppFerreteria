@@ -3,6 +3,7 @@ import Config from './Config' //Importa el componente Config.js
 
 const dirUsers = Config.USERS; //Usa la variable USERS del @env
 const dirPostUser = Config.CREAR_USER; //Post
+const dirPutUser = Config.MOD_USER; //Put
 
 const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
     const res = await fetch(dirUsers + cedula + '/' + password); //Aqui se realiza la consulta al API
@@ -25,4 +26,17 @@ const postUser = async (usuario) => {
         })
 }
 
-export { obtenerUsuarios, obtenerUsuario, postUser };
+const putUser = async (cedula, usuario) => {
+    console.log(cedula);
+    console.log(usuario);
+    await axios.put(dirPutUser+cedula, usuario)
+        .then(response => {
+            const resp = response.data; //retorna el resultado en formato json
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+}
+
+export { obtenerUsuarios, obtenerUsuario, postUser, putUser };
