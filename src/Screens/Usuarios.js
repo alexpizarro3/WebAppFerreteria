@@ -32,7 +32,7 @@ const Usuarios = () => {
   const handleClick = (event, cellValue, modo) => {
     setCellData(cellValue.row);
     setNewUser(cellValue.row);
-    seleccionarUsuario(cellValue, modo);
+    seleccionarUsuario(cellData, modo);
   };
 
   const columns = [
@@ -105,7 +105,7 @@ const Usuarios = () => {
   const bodyInsertar = (
     <div className={styles.modal}>
       <h3>Agregar Nuevo Usuario</h3>
-      <TextField label="Cédula" name="cedula" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
+      <TextField type="number" label="Cédula" name="cedula" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
       <br />
       <TextField label="Nombre" name="nombre" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
       <br />
@@ -123,17 +123,17 @@ const Usuarios = () => {
   )
 
   const bodyEditar = (
-    <div className={styles.modal}>
+    <div >
       <h3>Editar Usuario</h3>
-      <TextField label="Cedula" name="cedula" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} value={newUser && newUser.userCedula} />
+      <TextField required type="number" label="Cedula" name="cedula" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userCedula} ></TextField>
       <br />
-      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} value={newUser && newUser.userNombre} />
+      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem'}} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userNombre} />
       <br />
-      <TextField label="Apellidos" name="apellidos" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} value={newUser && newUser.userApellidos} />
+      <TextField label="Apellidos" name="apellidos" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userApellidos} />
       <br />
-      <TextField label="Role" name="role" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} value={newUser && newUser.userRole} />
+      <TextField label="Role" name="role" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.userRole} />
       <br />
-      <TextField label="Password" name="password" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} value={newUser && newUser.password} />
+      <TextField label="Password" name="password" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem'}}} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newUser && newUser.password.trimEnd()} />
       <br /><br />
       <div align="center">
         <Button color="primary">Editar</Button>
@@ -172,7 +172,7 @@ const Usuarios = () => {
           {bodyInsertar}
         </Modal>
 
-        <Modal
+        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "8rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
           open={modUser}
           onClose={abrirCerrarModalModificar}>
           {bodyEditar}
