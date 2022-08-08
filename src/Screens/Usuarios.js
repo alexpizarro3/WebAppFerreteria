@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 import DataTable from '../Components/DataTable';
 import styled from '@emotion/styled';
-import { obtenerUsuarios, postUser, putUser } from '../Components/Api'
+import { delUser, obtenerUsuarios, postUser, putUser } from '../Components/Api'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
@@ -36,11 +36,12 @@ const Usuarios = () => {
   };
 
   const columns = [
-    { field: 'idUser', headerName: 'Id Usuario', width: 130 },
-    { field: 'userCedula', headerName: '# Cedula', width: 130 },
-    { field: 'userNombre', headerName: 'Nombre Usuario', width: 130 },
-    { field: 'userRole', headerName: 'Role', width: 130 },
-    { field: 'password', headerName: 'Contraseña', width: 130 },
+    { field: 'idUser', headerName: 'Id Usuario', width: 100 },
+    { field: 'userCedula', headerName: '# Cedula', width: 100 },
+    { field: 'userNombre', headerName: 'Nombre Usuario', width: 100 },
+    { field: 'userApellidos', headerName: 'Apellidos', width: 150 },
+    { field: 'userRole', headerName: 'Role', width: 100 },
+    { field: 'password', headerName: 'Contraseña', width: 100 },
     {
       field: 'editar', headerName: 'Editar', width: 60, renderCell: (cellValue) => {
         return (
@@ -92,8 +93,10 @@ const Usuarios = () => {
 
   const seleccionarUsuario = (userSel, modo) => {
     setCellData(userSel);
-    (modo === 'editar') && abrirCerrarModalModificar();
-  }
+    (modo === 'editar')? abrirCerrarModalModificar()
+    : 
+    abrirCerrarModalEliminar();
+  };
 
   const peticionPost = async () => {
     const res = await postUser(newUser);
@@ -114,6 +117,12 @@ const Usuarios = () => {
     const res = await putUser(newUser.userCedula, valNueUser);
     console.log(res);
     abrirCerrarModalModificar();
+  };
+
+  const peticionDelete = async () => {
+    const res = await (delUser(cellData.userCedula));
+    console.log(res);
+    abrirCerrarModalEliminar();
   };
 
   const bodyInsertar = (
@@ -156,6 +165,18 @@ const Usuarios = () => {
     </div>
   )
 
+  const bodyEliminar = (
+    <div className={styles.modal}>
+      <p>Estás seguro que deseas eliminar al usuario <b>{newUser && newUser.userNombre}</b>? </p>
+      <div align="center">
+        <Button variant="contained" color="warning" sx={{marginRight: "2rem"}} onClick={() => peticionDelete()}>Eliminar</Button>
+        <Button variant="contained" color="primary" onClick={() => abrirCerrarModalEliminar()}>No</Button>
+
+      </div>
+
+    </div>
+  )
+
   return (
     <Container >
       <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', marginLeft: '22rem' }}>
@@ -190,6 +211,12 @@ const Usuarios = () => {
           open={modUser}
           onClose={abrirCerrarModalModificar}>
           {bodyEditar}
+        </Modal>
+
+        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "8rem", marginBottom: "3rem", bgcolor: "rgba(208, 0, 0, 0.9)", width: "30rem", height: "7rem", color: "white" }}
+          open={modElim}
+          onClose={abrirCerrarModalEliminar}>
+          {bodyEliminar}
         </Modal>
 
       </Box>
