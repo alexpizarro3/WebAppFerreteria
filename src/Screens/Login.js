@@ -23,20 +23,18 @@ export default function Login({ funcionSetLogValue }) {
 
   const dataUser = async (cedula, password) => { //Funcion que obtiene del api los usuarios
     const loadData = await obtenerUsuario(cedula, password);
-    console.log(loadData); 
     setLogin(loadData);
-    if (typeof loadData.message === 'undefined') {
+    if (loadData.message === 'done') {
       funcionSetLogValue(true);
       sweetalert("Credenciales Correctas", { icon: "success" });
       navigate('/usuarios'); //Navega hacia la pantalla de PowerBiScreen
+      console.log(loadData.message); //
     } else {
-      console.log(loadData);
-      console.log(cedula, password);
+      console.log(loadData.message);
       sweetalert("Credenciales Incorrectas", { icon: "error" });
       setTimeout(() => { //Funcion que espera 3 segundos y recarga la ventana
         window.location.reload();
-      }, 3000);
-      //setTimeout();
+      }, 2000);
     }
   }
 

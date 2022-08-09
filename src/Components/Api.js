@@ -7,8 +7,16 @@ const dirPutUser = Config.MOD_USER; //Put
 const dirDelUser = Config.BORRAR_USER; //Delete
 
 const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
-    const res = await fetch(dirUsers + cedula + '/' + password); //Aqui se realiza la consulta al API
-    return await res.json(); //retorna el resulatado en formato json
+    const res = await fetch(dirUsers + cedula + '/'); //Aqui se realiza la consulta al API
+    const response = await res.json();
+    if (response.password.trimEnd() === password) {
+        response.message = "done";
+        return response;
+    }else {
+        return response;
+    };
+
+    //retorna el resulatado en formato json
 };
 
 const obtenerUsuarios = async () => { //Funcion flecha que devuelve todos los usuarios del backend PERN
@@ -36,7 +44,7 @@ const delUser = async (cedula) => { //Funcion flecha que devuelve todos los usua
 const putUser = async (cedula, usuario) => {
     console.log(cedula);
     console.log(usuario);
-    await axios.put(dirPutUser+cedula, usuario)
+    await axios.put(dirPutUser + cedula, usuario)
         .then(response => {
             const resp = response.data; //retorna el resultado en formato json
             return resp; //retorna el resultado en formato json
