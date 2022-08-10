@@ -28,9 +28,7 @@ export default function Login({ funcionSetLogValue }) {
       funcionSetLogValue(true);
       sweetalert("Credenciales Correctas", { icon: "success" });
       navigate('/usuarios'); //Navega hacia la pantalla de PowerBiScreen
-      console.log(loadData.message); //
     } else {
-      console.log(loadData.message);
       sweetalert("Credenciales Incorrectas", { icon: "error" });
       setTimeout(() => { //Funcion que espera 3 segundos y recarga la ventana
         window.location.reload();
