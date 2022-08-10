@@ -10,6 +10,8 @@ import { delUser, obtenerUsuarios, postUser, putUser } from '../Components/Api'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
 
 const Usuarios = () => {
   const styles = useStyles(); //Aqui se almacenan los estilos
@@ -37,8 +39,8 @@ const Usuarios = () => {
   const columns = [
     { field: 'idUser', headerName: 'Id Usuario', width: 100 },
     { field: 'userCedula', headerName: '# Cedula', width: 100 },
-    { field: 'userNombre', headerName: 'Nombre Usuario', width: 100 },
-    { field: 'userApellidos', headerName: 'Apellidos', width: 150 },
+    { field: 'userNombre', headerName: 'Nombre Usuario', width: 150 },
+    { field: 'userApellidos', headerName: 'Apellidos', width: 250 },
     { field: 'userRole', headerName: 'Role', width: 100 },
     { field: 'password', headerName: 'Contraseña', width: 100 },
     {
@@ -92,9 +94,9 @@ const Usuarios = () => {
 
   const seleccionarUsuario = (userSel, modo) => {
     setCellData(userSel);
-    (modo === 'editar')? abrirCerrarModalModificar()
-    : 
-    abrirCerrarModalEliminar();
+    (modo === 'editar') ? abrirCerrarModalModificar()
+      :
+      abrirCerrarModalEliminar();
   };
 
   const peticionPost = async () => {
@@ -168,7 +170,7 @@ const Usuarios = () => {
     <div className={styles.modal}>
       <p>Estás seguro que deseas eliminar al usuario <b>{newUser && newUser.userNombre}</b>? </p>
       <div align="center">
-        <Button variant="contained" color="warning" sx={{marginRight: "2rem"}} onClick={() => peticionDelete()}>Eliminar</Button>
+        <Button variant="contained" color="warning" sx={{ marginRight: "2rem" }} onClick={() => peticionDelete()}>Eliminar</Button>
         <Button variant="contained" color="primary" onClick={() => abrirCerrarModalEliminar()}>No</Button>
 
       </div>
@@ -178,21 +180,31 @@ const Usuarios = () => {
 
   return (
     <Container >
-      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', marginLeft: '22rem' }}>
-        Usuarios
-        <Tooltip title='Nuevo Usuario' placement='left' aria-details='Nuevo'>
-          <AddToPhotosOutlinedIcon color="primary" onClick={() => abrirCerrarModalInsertar()} role="button" tabIndex={0} sx={{ color: '#blue', fontSize: 50, marginLeft: '8rem' }} ></AddToPhotosOutlinedIcon>
-        </Tooltip>
-        <Link to='/dashboard'>
-          <Tooltip title='Dashboard' placement='top' aria-details='Indicadores'>
-            <AssessmentOutlinedIcon sx={{ color: '#ffe100', fontSize: 50, marginLeft: '2rem' }}></AssessmentOutlinedIcon>
+      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', alignItems: 'center', marginRight: '1rem' }}>
+        <Link to='/Compras/'>
+          <Tooltip title='Ir a Compras' placement='top' aria-details='Compras'>
+            <AddShoppingCartOutlinedIcon sx={{ color: 'black', fontSize: 50, marginRight: '2rem' }}></AddShoppingCartOutlinedIcon>
+          </Tooltip>
+        </Link>
+        <Link to='/Ventas/'>
+          <Tooltip title='Ir a Ventas' placement='top' aria-details='Ventas'>
+            <RequestQuoteOutlinedIcon sx={{ color: '#023e8a', fontSize: 50, marginRight: '2rem' }}></RequestQuoteOutlinedIcon>
           </Tooltip>
         </Link>
         <Link to='/productos'>
-          <Tooltip title='Productos' placement='right' aria-details='Mantenimiento'>
-            <ConstructionOutlinedIcon sx={{ color: '#9a031e', fontSize: 50, marginLeft: '2rem' }}></ConstructionOutlinedIcon>
+          <Tooltip title='Productos' placement='top' aria-details='Mantenimiento'>
+            <ConstructionOutlinedIcon sx={{ color: '#9a031e', fontSize: 50, marginRight: '2rem' }}></ConstructionOutlinedIcon>
           </Tooltip>
         </Link>
+        <Link to='/dashboard'>
+          <Tooltip title='Dashboard' placement='top' aria-details='Indicadores'>
+            <AssessmentOutlinedIcon sx={{ color: '#ffe100', fontSize: 50, marginRight: '8rem' }}></AssessmentOutlinedIcon>
+          </Tooltip>
+        </Link>
+        Usuarios
+        <Tooltip title='Nuevo Usuario' placement='left' aria-details='Nuevo'>
+          <AddToPhotosOutlinedIcon color="primary" onClick={() => abrirCerrarModalInsertar()} role="button" tabIndex={0} sx={{ color: '#blue', fontSize: 50, marginLeft: '22rem' }} ></AddToPhotosOutlinedIcon>
+        </Tooltip>
       </Typography>
       <Box >
         <DataTable

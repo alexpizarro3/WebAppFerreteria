@@ -10,6 +10,8 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
 
 const Productos = () => {
 
@@ -107,7 +109,7 @@ const Productos = () => {
     { field: 'Tipo', headerName: 'Tipo', width: 10 },
     { field: 'PrecioVenta', headerName: 'Precio Venta', width: 100 },
     { field: 'PrecioCompra', headerName: 'Precio Compra', width: 120 },
-    { field: 'Inventario', headerName: 'Inventario', width: 40 },
+    { field: 'Inventario', headerName: 'Inventario', width: 75 },
     {
       field: 'editar', headerName: 'Editar', width: 60, renderCell: (cellValue) => {
         return (
@@ -136,9 +138,9 @@ const Productos = () => {
       <br />
       <TextField type="number" label="Tipo" name="tipo" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
       <br />
-      <TextField label="Pr. Venta" name="precioventa" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
+      <TextField type="number" label="Pr. Venta" name="precioventa" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
       <br />
-      <TextField label="Pr. Compra" name="preciocompra" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
+      <TextField type="number" label="Pr. Compra" name="preciocompra" onChange={handleChange} sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} />
       <br /><br />
       <div align="center">
         <Button variant='contained' onClick={() => peticionPost()} color="primary" sx={{ marginRight: '1rem' }}>Insertar</Button>
@@ -150,15 +152,15 @@ const Productos = () => {
   const bodyEditar = (
     <div >
       <h3>Editar Producto</h3>
-      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Nombre} ></TextField>
+      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem', width: '70%' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Nombre} ></TextField>
       <br />
-      <TextField label="Descripción" name="descripcion" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Descripcion} />
+      <TextField label="Descripción" name="descripcion" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem', width: '70%' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Descripcion} />
       <br />
-      <TextField type="number" label="Tipo" name="tipo" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Tipo} />
+      <TextField type="number" label="Tipo" name="tipo" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem', width: '70%' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Tipo} />
       <br />
-      <TextField label="Pr. Venta" name="precioventa" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioVenta} />
+      <TextField type="number" label="Pr. Venta" name="precioventa" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem', width: '70%' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioVenta} />
       <br />
-      <TextField label="Pr. Compra" name="preciocompra" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioCompra} />
+      <TextField type="number" label="Pr. Compra" name="preciocompra" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem', width: '70%' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioCompra} />
       <br /><br />
       <div align="center">
         <Button onClick={() => peticionPut()} variant='contained' color="primary" sx={{ marginRight: '1rem' }}>Editar</Button>
@@ -181,21 +183,31 @@ const Productos = () => {
 
   return (
     <Container >
-      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', marginLeft: '21rem' }}>
-        Productos
-        <Tooltip title='Nuevo Producto' placement='left' aria-details='Nuevo'>
-          <AddToPhotosOutlinedIcon color="primary" onClick={() => abrirCerrarModalInsertar()} role="button" tabIndex={0} sx={{ color: '#blue', fontSize: 50, marginLeft: '7rem' }} ></AddToPhotosOutlinedIcon>
-        </Tooltip>
-        <Link to='/dashboard'>
-          <Tooltip title='Dashboard' placement='top' aria-details='Indicadores'>
-            <AssessmentOutlinedIcon sx={{ color: '#ffe100', fontSize: 50, marginLeft: '2rem' }}></AssessmentOutlinedIcon>
+      <Typography sx={{ color: 'black', fontSize: '40px', textAlign: 'center', verticalAlignment: 'center', marginRight: '1rem' }}>
+        <Link to='/Compras/'>
+          <Tooltip title='Ir a Compras' placement='top' aria-details='Compras'>
+            <AddShoppingCartOutlinedIcon sx={{ color: 'black', fontSize: 50, marginRight: '2rem' }}></AddShoppingCartOutlinedIcon>
+          </Tooltip>
+        </Link>
+        <Link to='/Ventas/'>
+          <Tooltip title='Ir a Ventas' placement='top' aria-details='Ventas'>
+            <RequestQuoteOutlinedIcon sx={{ color: '#023e8a', fontSize: 50, marginRight: '2rem' }}></RequestQuoteOutlinedIcon>
           </Tooltip>
         </Link>
         <Link to='/usuarios'>
           <Tooltip title='Usuarios' placement='right' aria-details='Mantenimiento'>
-            <PeopleAltIcon sx={{ color: '#9a031e', fontSize: 50, marginLeft: '2rem' }}></PeopleAltIcon>
+            <PeopleAltIcon sx={{ color: '#9a031e', fontSize: 50, marginRight: '2rem' }}></PeopleAltIcon>
           </Tooltip>
         </Link>
+        <Link to='/dashboard'>
+          <Tooltip title='Dashboard' placement='top' aria-details='Indicadores'>
+            <AssessmentOutlinedIcon sx={{ color: '#ffe100', fontSize: 50, marginRight: '8rem' }}></AssessmentOutlinedIcon>
+          </Tooltip>
+        </Link>
+        Productos
+        <Tooltip title='Nuevo Producto' placement='left' aria-details='Nuevo'>
+          <AddToPhotosOutlinedIcon color="primary" onClick={() => abrirCerrarModalInsertar()} role="button" tabIndex={0} sx={{ color: '#blue', fontSize: 50, marginLeft: '21rem' }} ></AddToPhotosOutlinedIcon>
+        </Tooltip>
       </Typography>
       <Box>
         <DataTable
