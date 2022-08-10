@@ -83,6 +83,7 @@ const postProducto = async (producto) => {
 };
 
 const delProducto = async (IdProducto) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
+    console.log(IdProducto);
     const res = await axios.delete(dirDelProducto + IdProducto); //Aqui se realiza la consulta al API
     return await res.data; //retorna el resulatado en formato json
 };

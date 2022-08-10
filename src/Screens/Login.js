@@ -52,7 +52,7 @@ export default function Login({ funcionSetLogValue }) {
     >
       <Grid item xs={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CssTextField label="Cédula" {...register('cedula', { required: true, minLength: 6, maxLength: 12 })} onChange={handleChange} helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "24px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
+          <CssTextField type="number" label="Cédula" {...register('cedula', { required: true, minLength: 6, maxLength: 12 })} onChange={handleChange} helperText="Ingrese su Cédula sin guiones 199997777" id="custom-css-outlined-input" variant="filled" sx={{ width: 400, "& label": { color: "black", fontSize: "24px" }, bgcolor: "rgba(254, 228, 64, 0.4)", borderRadius: 1, boxShadow: 10 }} FormHelperTextProps={{ style: { color: "black", fontSize: "14px" } }} inputProps={{ style: { fontSize: "20px", textAlign: "center", color: "white" } }} />
           <br />
           {errors.cedula?.type === 'required' && <Alert variant='standard' severity="error">Este campo es requerido !</Alert>}
           {/* {errors.cedula?.type === 'minLength' && <Alert variant='standard' severity="alert">El mínimo es de 6 caracteres !</Alert>}

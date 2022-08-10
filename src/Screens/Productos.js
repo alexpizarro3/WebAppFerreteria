@@ -47,6 +47,59 @@ const Productos = () => {
     setModNuevo(!modNuevo);
   };
 
+  const abrirCerrarModalModificar = () => {
+    setModProd(!modProd);
+  };
+
+  const abrirCerrarModalEliminar = () => {
+    setModElim(!modElim);
+  }
+
+  const seleccionarProducto = (productoSel, modo) => {
+    setCellData(productoSel);
+    (modo === 'editar') ? abrirCerrarModalModificar() //abrirCerrarModalModificar()
+      :
+      abrirCerrarModalEliminar();//abrirCerrarModalEliminar();
+  };
+
+  const fetchData = async () => {
+    const loaddata = await obtenerProductos();
+    setDataGrid(loaddata);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const peticionPost = async () => {
+    const res = await postProducto(newProd);
+    console.log(res);
+    setData(data.concat(res));
+    abrirCerrarModalInsertar();
+  };
+
+  const peticionPut = async () => {
+    let valNueProd = {};
+    Object.assign(valNueProd, newProd);
+    valNueProd.Nombre = newProd.nombre;
+    valNueProd.Descripcion = newProd.descripcion;
+    valNueProd.Tipo = newProd.tipo;
+    valNueProd.PrecioVenta = newProd.precioventa;
+    valNueProd.PrecioCompra = newProd.preciocompra;
+    delete valNueProd.IdProducto;
+    delete valNueProd.Inventario;
+    const res = await putProducto(newProd.IdProducto, valNueProd);
+    console.log(res);
+    console.log(cellData);
+    abrirCerrarModalModificar();
+  };
+
+  const peticionDelete = async () => {
+    const res = await (delProducto(newProd.IdProducto));
+    console.log(res);
+    abrirCerrarModalEliminar();
+  };
+
   const columns = [
     { field: 'IdProducto', headerName: 'Id', width: 10 },
     { field: 'Nombre', headerName: 'Producto', width: 200 },
@@ -74,29 +127,6 @@ const Productos = () => {
     },
   ];
 
-  const fetchData = async () => {
-    const loaddata = await obtenerProductos();
-    setDataGrid(loaddata);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const seleccionarProducto = (productoSel, modo) => {
-    setCellData(productoSel);
-    (modo === 'editar') ? console.log("Hola") //abrirCerrarModalModificar()
-      :
-      console.log("Hola");//abrirCerrarModalEliminar();
-  };
-
-  const peticionPost = async () => {
-    const res = await postProducto(newProd);
-    console.log(res);
-    setData(data.concat(res));
-    abrirCerrarModalInsertar();
-  };
-
   const bodyInsertar = (
     <div className={styles.modal}>
       <h3>Agregar Nuevo Producto</h3>
@@ -117,6 +147,37 @@ const Productos = () => {
     </div>
   )
 
+  const bodyEditar = (
+    <div >
+      <h3>Editar Producto</h3>
+      <TextField label="Nombre" name="nombre" sx={{ bgcolor: '#e9c46a', height: '3rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Nombre} ></TextField>
+      <br />
+      <TextField label="Descripción" name="descripcion" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Descripcion} />
+      <br />
+      <TextField type="number" label="Tipo" name="tipo" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.Tipo} />
+      <br />
+      <TextField label="Pr. Venta" name="precioventa" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioVenta} />
+      <br />
+      <TextField label="Pr. Compra" name="preciocompra" sx={{ bgcolor: '#e9c46a', height: '3rem', marginTop: '1rem' }} inputProps={{ "aria-readonly": "true", style: { color: "black", height: '1rem' } }} InputLabelProps={{ style: { color: "white" } }} onChange={handleChange} defaultValue={newProd && newProd.PrecioCompra} />
+      <br /><br />
+      <div align="center">
+        <Button onClick={() => peticionPut()} variant='contained' color="primary" sx={{ marginRight: '1rem' }}>Editar</Button>
+        <Button variant='contained' onClick={() => abrirCerrarModalModificar()}>Cancelar</Button>
+      </div>
+    </div>
+  )
+
+  const bodyEliminar = (
+    <div className={styles.modal}>
+      <p>Estás seguro que deseas eliminar el Producto <b>{newProd && newProd.Nombre}</b>? </p>
+      <div align="center">
+        <Button variant="contained" color="warning" sx={{ marginRight: "2rem" }} onClick={() => peticionDelete()}>Eliminar</Button>
+        <Button variant="contained" color="primary" onClick={() => abrirCerrarModalEliminar()}>No</Button>
+
+      </div>
+
+    </div>
+  )
 
   return (
     <Container >
@@ -147,6 +208,18 @@ const Productos = () => {
           open={modNuevo}
           onClose={abrirCerrarModalInsertar}>
           {bodyInsertar}
+        </Modal>
+
+        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "7rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
+          open={modProd}
+          onClose={abrirCerrarModalModificar}>
+          {bodyEditar}
+        </Modal>
+
+        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "8rem", marginBottom: "3rem", bgcolor: "rgba(208, 0, 0, 0.9)", width: "30rem", height: "7rem", color: "white" }}
+          open={modElim}
+          onClose={abrirCerrarModalEliminar}>
+          {bodyEliminar}
         </Modal>
 
       </Box>

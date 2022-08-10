@@ -9,7 +9,7 @@ const DataTable = ({
 }) => {
 
   return (
-    <div style={{ height: 350, width: '85%', marginLeft: '5rem'}} >
+    <div style={{ height: 350, width: '90%', marginLeft: '3rem'}} >
       <DataGrid sx={{ bgcolor: "rgba(38, 7, 1, 0.6)", color: "white" , borderColor: "white" }} 
       getRowId={getRowId} rows={rows} columns={columns} 
       />

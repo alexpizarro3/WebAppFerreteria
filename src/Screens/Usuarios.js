@@ -30,7 +30,6 @@ const Usuarios = () => {
 
   const handleClick = (event, cellValue, modo) => {
     setCellData(cellValue.row);
-    console.log(cellData);
     setNewUser(cellValue.row);
     seleccionarUsuario(cellValue.row, modo);
   };
