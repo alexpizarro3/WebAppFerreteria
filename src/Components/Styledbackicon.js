@@ -8,7 +8,7 @@ function Styledbackicon() {
   return (
     <Link to='/usuarios'>
       <Tooltip title="Volver" placement='bottom'>
-        <StyledBackIcon sx={{ color: "rgba(0, 48, 73, 0.9)", fontSize: 50, paddingRight: 3, marginLeft: '10rem' }}></StyledBackIcon>
+        <StyledBackIcon sx={{ color: "rgba(0, 48, 73, 0.9)", fontSize: 50, paddingRight: 3, marginLeft: '1rem' }}></StyledBackIcon>
       </Tooltip>
     </Link>
   )

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { CustomFooterTotalComponent } from '../Components/customFooter';
+import { Button, Typography } from '@mui/material';
 
 
 const columns = [
@@ -65,7 +67,7 @@ const columns = [
 
 const rows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, preciou: 500, cantidad: 1, subtotal: 500 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, preciou: 700, cantidad: 3, subtotal: 2100},
+  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, preciou: 700, cantidad: 3, subtotal: 2100 },
   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45, preciou: 800, cantidad: 4, subtotal: 1600 },
   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, preciou: 600, cantidad: 5, subtotal: 3000 },
 ];
@@ -76,7 +78,20 @@ const Ventas = () => {
   const [impuesto, setImpuesto] = useState(0);
 
   return (
-    <Box sx={{ bgcolor: 'red' }}>
+    <Box sx={{}}>
+      <Typography variant="h1" component="div" gutterBottom sx={{ flexGrow: 1, fontSize: '25px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius: 1 }}>
+        Ventas
+      </Typography>
+      <Box sx={{ bgcolor: 'brown', borderRadius: 2 }}>
+        <TextField label="Productos" sx={{ width: 400, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Precio" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Cantidad" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Subtotal" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", }} >Agregar</Button>
+        <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "black" }} >Cancelar</Button>
+        <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "green" }} >Facturar</Button>
+      </Box>
+      <br />
       <DataGrid disableColumnFilter={true} sx={{ height: 400, bgcolor: 'white' }}
         rows={rows}
         columns={columns}
@@ -97,8 +112,8 @@ const Ventas = () => {
             .reduce((a, b) => a + b, 0);
           console.log(subtotal);
           setSubTotal(subtotal);
-          setImpuesto(subtotal*0.13);
-          setTotal(impuesto+subtotal);
+          setImpuesto(subtotal * 0.13);
+          setTotal(impuesto + subtotal);
         }}
       />
     </Box>
