@@ -195,7 +195,7 @@ const Productos = () => {
           </Tooltip>
         </Link>
         <Link to='/usuarios'>
-          <Tooltip title='Usuarios' placement='right' aria-details='Mantenimiento'>
+          <Tooltip title='Usuarios' placement='top' aria-details='Mantenimiento'>
             <PeopleAltIcon sx={{ color: '#9a031e', fontSize: 50, marginRight: '2rem' }}></PeopleAltIcon>
           </Tooltip>
         </Link>
