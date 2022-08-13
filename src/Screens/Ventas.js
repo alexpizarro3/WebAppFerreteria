@@ -1,98 +1,147 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
+import userContextUsuario from '../Components/UserContext';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { CustomFooterTotalComponent } from '../Components/customFooter';
 import { Button, Typography } from '@mui/material';
-
+import { obtenerProductos } from '../Components/Api';
+import MenuItem from '@mui/material/MenuItem';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'idProducto', headerName: 'Id', width: 90, headerAlign: 'center', },
   {
-    field: 'firstName',
-    headerName: 'First name',
+    field: 'Nombre',
+    headerName: 'Producto',
     width: 150,
     editable: true,
   },
   {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-  {
-    field: 'preciou',
-    headerName: 'Precio Unitario',
-    type: 'number',
-    width: 110,
-  },
-  {
-    field: 'cantidad',
+    field: 'Cantidad',
     headerName: 'Cantidad',
     type: 'number',
-    width: 110,
+    width: 150,
+    editable: true,
   },
   {
-    field: 'subtotal',
-    headerName: 'Subtotal',
+    field: 'Precio Venta',
+    headerName: 'Precio de Venta',
     type: 'number',
-    width: 110,
+    width: 200,
+    editable: true,
+  },
+  {
+    field: 'SubTotal',
+    headerName: 'SubTotal',
+    description: 'Subtotal de Multiplicar Cantidad x Precio',
+    type: 'number',
+    width: 150,
+    editable: true,
   },
   {
     field: 'iva',
     headerName: 'IVA',
     description: 'Multiplicar Subtotal * 13%',
     type: 'number',
-    width: 110,
+    width: 150,
     valueGetter: (params) =>
       `${params.row.subtotal}` * 0.13,
   },
 ];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, preciou: 500, cantidad: 1, subtotal: 500 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, preciou: 700, cantidad: 3, subtotal: 2100 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45, preciou: 800, cantidad: 4, subtotal: 1600 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, preciou: 600, cantidad: 5, subtotal: 3000 },
+
 ];
 
 const Ventas = () => {
+  const { userContext, setUserContext } = useContext(userContextUsuario);
   const [total, setTotal] = useState(0);
   const [subtotal, setSubTotal] = useState(0);
   const [impuesto, setImpuesto] = useState(0);
+  const [listProd, setListProd] = useState([]);
+  const [idProducto, setIdProducto] = useState("");
+  const [prProducto, setPrProducto] = useState(0);
+  const [subTotalItem, setSubTotalItem] = useState(0);
+  const [cantItem, setCantItem] = useState("");
+  const textCantidad = useRef(null);
 
+  console.log(userContext);
+
+  const fetchData = async () => {
+    const loaddata = await obtenerProductos();
+    setListProd(loaddata);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  listProd.forEach(prod => {
+    prod['label'] = prod.Nombre;
+  });
+
+  const handleChange = (event) => {
+    setIdProducto(event.target.value);
+    prodSelect(event.target.value);
+  };
+
+  const prodSelect = (id) => {
+    let selected = listProd.find(prod =>  prod.IdProducto === id);
+    setPrProducto(selected.PrecioVenta);
+    focus();
+  };
+
+  const focus = () => {
+    textCantidad.current.focus();
+  };
+
+  const cantProductos = e => {
+    setCantItem(e.target.value);
+  };
+
+
+
+  const prcantChange = () => {
+    const res = prProducto * cantItem;
+    setSubTotalItem(res);
+  };
+
+  console.log(subTotalItem);
+  
   return (
     <Box sx={{}}>
       <Typography variant="h1" component="div" gutterBottom sx={{ flexGrow: 1, fontSize: '25px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius: 1 }}>
         Ventas
       </Typography>
       <Box sx={{ bgcolor: 'brown', borderRadius: 2 }}>
-        <TextField label="Productos" sx={{ width: 400, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <TextField label="Precio" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <TextField label="Cantidad" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <TextField label="Subtotal" sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField select value={idProducto} label="Productos" onChange={handleChange} type="search" sx={{ width: 258, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }}>
+          {listProd.map((option) => (
+            <MenuItem key={option.IdProducto} value={option.IdProducto}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField label="Precio" value={prProducto} inputRef={textCantidad} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Cantidad" value={cantItem} defaultValue="0" type="number" onChange={cantProductos} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Subtotal" value={subTotalItem} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Tipo Venta" InputProps={{
+          endAdornment: (
+            <datalist id="rfc">
+              <option value="Efectivo"></option>
+              <option value="Tarjeta"></option>
+            </datalist>
+          ),
+          inputProps: {
+            list: "rfc"
+          }
+        }}
+          sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "14px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
         <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", }} >Agregar</Button>
         <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "black" }} >Cancelar</Button>
         <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "green" }} >Facturar</Button>
       </Box>
       <br />
-      <DataGrid disableColumnFilter={true} sx={{ height: 400, bgcolor: 'white' }}
+      <DataGrid disableColumnFilter={true} sx={{ height: 400, bgcolor: 'white', align: 'center' }}
         rows={rows}
         columns={columns}
         components={{

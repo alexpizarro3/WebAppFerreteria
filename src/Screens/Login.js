@@ -1,9 +1,10 @@
+import { useState, useContext } from 'react';
+import userContextUsuario from '../Components/UserContext';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { Grid, Button } from '@mui/material';
 import { obtenerUsuario } from '../Components/Api';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import { useForm } from "react-hook-form";
 import sweetalert from 'sweetalert';
@@ -11,6 +12,7 @@ import sweetalert from 'sweetalert';
 export default function Login({ funcionSetLogValue }) {
   const { register, handleSubmit, formState: { errors } } = useForm(); //Para validar el formulario
   const navigate = useNavigate();
+  const { userContext, setUserContext } = useContext(userContextUsuario);
   const [login, setLogin] = useState({ //funcion que almacena los valores del login en usestate
     cedula: '',
     password: '',
@@ -27,6 +29,8 @@ export default function Login({ funcionSetLogValue }) {
     if (loadData.message === 'done') {
       funcionSetLogValue(true);
       sweetalert("Credenciales Correctas", { icon: "success" });
+      setUserContext(cedula);
+      console.log(userContext);
       navigate('/usuarios'); //Navega hacia la pantalla de PowerBiScreen
     } else {
       sweetalert("Credenciales Incorrectas", { icon: "error" });
