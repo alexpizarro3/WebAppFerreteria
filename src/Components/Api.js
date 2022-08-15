@@ -1,3 +1,5 @@
+import userContextUsuario from './UserContext';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import Config from './Config' //Importa el componente Config.js
 
@@ -9,6 +11,8 @@ const dirProductos = Config.PRODUCTOS;
 const dirPostProducto = Config.CREAR_PRODUCTO; //Post
 const dirPutProducto = Config.MOD_PRODUCTO; //Put
 const dirDelProducto = Config.BORRAR_PRODUCTO; //Delete
+const dirPostVenta = Config.CREAR_VENTA; //Post
+const dirPostDetalleVenta = Config.CREAR_DETALLE_VENTA; //Post
 
 const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
     const res = await fetch(dirUsers + cedula + '/'); //Aqui se realiza la consulta al API
@@ -37,7 +41,7 @@ const postUser = async (usuario) => {
             console.log(error);
             return error;
         })
-}
+};
 
 const delUser = async (cedula) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
     console.log(cedula);
@@ -56,7 +60,7 @@ const putUser = async (cedula, usuario) => {
             console.log(error);
             return error;
         })
-}
+};
 
 const obtenerProducto = async (IdProducto) => { //Funcion flecha que devuelve el producto del backend PERN
     const res = await fetch(dirProductos + IdProducto + '/'); //Aqui se realiza la consulta al API
@@ -70,11 +74,9 @@ const obtenerProductos = async () => { //Funcion flecha que devuelve todos los p
 };
 
 const postProducto = async (producto) => {
-    console.log(producto);
     await axios.post(dirPostProducto, producto)
         .then(response => {
             const resp = response.data; //retorna el resultado en formato json
-            console.log(resp);
             return resp; //retorna el resultado en formato json
         }).catch(error => {
             console.log(error);
@@ -96,7 +98,30 @@ const putProducto = async (idProducto, producto) => {
         }).catch(error => {
             return error;
         })
-}
+};
 
+const postVenta = async (venta) => {
+    await axios.post(dirPostVenta, venta)
+        .then((response) => {
+            const resp = response.data; //retorna el resultado en formato json
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+};
 
-export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto };
+const postDetalleVenta = async (detalleVenta) => {
+    console.log(detalleVenta);
+    await axios.post(dirPostDetalleVenta, detalleVenta)
+        .then(response => {
+            const resp = response.data; //retorna el resultado en formato json
+            console.log(resp);
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+};
+
+export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto, postVenta, postDetalleVenta };

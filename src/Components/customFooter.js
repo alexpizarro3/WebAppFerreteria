@@ -9,9 +9,9 @@ function CustomFooterTotalComponent(props) {
 }
 
 CustomFooterTotalComponent.propTypes = {
-    subtotal: PropTypes.number,
-    impuesto: PropTypes.number,
-    total: PropTypes.number 
+    subtotal: PropTypes.string,
+    impuesto: PropTypes.string,
+    total: PropTypes.string,
 };
 
 export { CustomFooterTotalComponent };
