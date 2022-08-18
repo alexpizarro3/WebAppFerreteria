@@ -4,11 +4,14 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { CustomFooterTotalComponent } from '../Components/customFooter';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Modal } from '@mui/material';
 import { obtenerProductos, postDetalleVenta } from '../Components/Api';
 import Config from '../Components/Config'; //Importa el componente Config.js
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
+import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
+import sweetalert from 'sweetalert';
 
 
 const columns = [
@@ -26,8 +29,10 @@ const columns = [
 ];
 
 const Ventas = () => {
+  const styles = useStyles(); //Aqui se almacenan los estilos
   const { userContext, setUserContext } = useContext(userContextUsuario);
   const [total, setTotal] = useState("");
+  const [totalAux, setTotalAux] = useState("");
   const [subtotal, setSubTotal] = useState("");
   const [impuesto, setImpuesto] = useState("");
   const [listProd, setListProd] = useState([]);
@@ -37,7 +42,9 @@ const Ventas = () => {
   const [prProducto, setPrProducto] = useState(0);
   const [subTotalItem, setSubTotalItem] = useState(0);
   const [cantItem, setCantItem] = useState("");
-  const [tipoVenta, setTipoVenta] = useState();
+  const [tipoVenta, setTipoVenta] = useState("");
+  const [idVenta, setIdVenta] = useState();
+  const [modalVentaExitosa, setModalVentaExitosa] = useState(false);
   const [venta, setVenta] = useState({});
   const [detalleVenta, setDetalleVenta] = useState([]);
   const dirPostVenta = Config.CREAR_VENTA; //Post
@@ -88,7 +95,12 @@ const Ventas = () => {
   };
 
   const handleAddRow = () => { //funcion que agrega una fila nueva al grid usando los states de cada variable
-    setRows((prevRows) => [...prevRows, createNewRow()]); //
+    if (cantItem === "" || tipoVenta === "" || prProducto === 0) {
+      sweetalert("Varios campos son necesarios favor revisar....", { icon: "error" });
+    }
+    else {
+      setRows((prevRows) => [...prevRows, createNewRow()]); //
+    }
   };
 
   const handleTipoVenta = e => {
@@ -96,13 +108,19 @@ const Ventas = () => {
   };
 
   const handlePostVenta = async () => {
-    await axios.post(dirPostVenta, venta)
+    if (rows.length === 0) {
+      sweetalert("Varios campos son necesarios favor revisar....", { icon: "error" });
+    }
+    else {
+      await axios.post(dirPostVenta, venta)
       .then((response) => {
         const resp = response.data; //retorna el resultado en formato json
+        setIdVenta(resp.IdVenta);
         handlePostDetalleVenta(resp.IdVenta);
       }).catch(error => {
         console.log(error);
       })
+    }
   };
 
   console.log(detalleVenta);
@@ -121,12 +139,32 @@ const Ventas = () => {
       const res = await postDetalleVenta(detalle);
       console.log(res);
     });
+    abrirCerrarModalVentaExitosa();
   };
 
-  console.log(userContext);
+  const abrirCerrarModalVentaExitosa = () => {
+    setModalVentaExitosa(!modalVentaExitosa);
+    setTotalAux(total);
+    setSubTotal("");
+    setImpuesto("");
+    setTotal("");
+    setRows([]);
+  }
+
+  const bodyVentaExitosa = (
+    <div className={styles.modal}>
+      <p>Factura {idVenta} agregada exitosamente</p>
+      <p>Monto Total de Venta a Facturar = {totalAux} </p>
+      <div align="center">
+        <Link to="/Ventas/">
+          <Button variant="contained" color="primary" sx={{ marginRight: "2rem" }} onClick={() => abrirCerrarModalVentaExitosa()}>Aceptar</Button>
+        </Link>
+      </div>
+    </div>
+  )
 
   return (
-    <Box sx={{}}>
+    <Box >
       <Typography variant="h1" component="div" gutterBottom sx={{ flexGrow: 1, fontSize: '25px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius: 1 }}>
         Ventas
       </Typography>
@@ -153,9 +191,8 @@ const Ventas = () => {
           }
         }}
           sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "14px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <Button variant='contained' onClick={handleAddRow} sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", }} >Agregar</Button>
-        <Button variant='contained' sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "black" }} >Cancelar</Button>
-        <Button variant='contained' onClick={handlePostVenta} sx={{ margin: "0.5rem", height: "3.5rem", width: "5.5rem", bgcolor: "green" }} >Facturar</Button>
+        <Button variant='contained' onClick={handleAddRow} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", }} >Agregar</Button>
+        <Button variant='contained' onClick={handlePostVenta} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", bgcolor: "green" }} >Facturar</Button>
       </Box>
       <br />
       <DataGrid disableColumnFilter={true} sx={{ height: 400, bgcolor: 'white', align: 'center' }}
@@ -183,9 +220,35 @@ const Ventas = () => {
           setVenta({ CedulaUsuario: userContext, Tipo: tipoVenta, Fecha: hoy.toISOString() });
         }}
       />
+      <Box>
+        <Modal sx={{ alignItems: 'center', textAlign: "center", marginLeft: "46rem", marginTop: "23rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.6)", width: "30rem", height: "9rem", color: "white", borderRadius: "5px" }}
+          open={modalVentaExitosa}
+          onClose={abrirCerrarModalVentaExitosa}>
+          {bodyVentaExitosa}
+        </Modal>
+      </Box>
     </Box>
   )
 }
+
+const useStyles = styled((theme) => ({
+  modal: {
+    width: 500,
+    backgroundColor: theme.palette.background.paper,
+    border: '8px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  iconos: {
+    cursor: 'pointer'
+  },
+  inputMaterial: {
+    width: '50%'
+  }
+}));
 
 export default Ventas
 

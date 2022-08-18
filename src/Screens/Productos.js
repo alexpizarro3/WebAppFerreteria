@@ -18,7 +18,6 @@ const Productos = () => {
   const styles = useStyles(); //Aqui se almacenan los estilos
   const [dataGrid, setDataGrid] = useState([]);
   const [cellData, setCellData] = useState();
-
   const [data, setData] = useState([]);
   const [modNuevo, setModNuevo] = useState(false);
   const [modProd, setModProd] = useState(false);
@@ -175,9 +174,7 @@ const Productos = () => {
       <div align="center">
         <Button variant="contained" color="warning" sx={{ marginRight: "2rem" }} onClick={() => peticionDelete()}>Eliminar</Button>
         <Button variant="contained" color="primary" onClick={() => abrirCerrarModalEliminar()}>No</Button>
-
       </div>
-
     </div>
   )
 
