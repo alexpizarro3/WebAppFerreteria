@@ -206,26 +206,26 @@ const Productos = () => {
           <AddToPhotosOutlinedIcon color="primary" onClick={() => abrirCerrarModalInsertar()} role="button" tabIndex={0} sx={{ color: '#blue', fontSize: 50, marginLeft: '21rem' }} ></AddToPhotosOutlinedIcon>
         </Tooltip>
       </Typography>
-      <Box>
+      <Box >
         <DataTable
           getRowId={row => row.IdProducto}
           rows={dataGrid}
           columns={columns}
         />
 
-        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "7rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
+        <Modal sx={{ left: "35%", textAlign: "center", marginTop: "7rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
           open={modNuevo}
           onClose={abrirCerrarModalInsertar}>
           {bodyInsertar}
         </Modal>
 
-        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "7rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
+        <Modal sx={{ left: "35%", textAlign: "center", marginTop: "7rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.75)", width: "30rem", color: "white" }}
           open={modProd}
           onClose={abrirCerrarModalModificar}>
           {bodyEditar}
         </Modal>
 
-        <Modal sx={{ textAlign: "center", marginLeft: "24rem", marginTop: "8rem", marginBottom: "3rem", bgcolor: "rgba(208, 0, 0, 0.9)", width: "30rem", height: "7rem", color: "white" }}
+        <Modal sx={{ left: "35%", textAlign: "center", marginTop: "8rem", marginBottom: "3rem", bgcolor: "rgba(208, 0, 0, 0.9)", width: "30rem", height: "7rem", color: "white" }}
           open={modElim}
           onClose={abrirCerrarModalEliminar}>
           {bodyEliminar}

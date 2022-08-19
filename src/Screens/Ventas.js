@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { CustomFooterTotalComponent } from '../Components/customFooter';
 import { Button, Typography, Modal } from '@mui/material';
-import { obtenerProductos, postDetalleVenta } from '../Components/Api';
+import { obtenerProductos, postDetalleVenta, putCanInv } from '../Components/Api';
 import Config from '../Components/Config'; //Importa el componente Config.js
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
@@ -138,6 +138,8 @@ const Ventas = () => {
       console.log(detalle);
       const res = await postDetalleVenta(detalle);
       console.log(res);
+      const response = await putCanInv(detalle.IdProducto,  {Cantidad : detalle.Cantidad*-1})
+      console.log(response);
     });
     abrirCerrarModalVentaExitosa();
   };
@@ -221,7 +223,7 @@ const Ventas = () => {
         }}
       />
       <Box>
-        <Modal sx={{ alignItems: 'center', textAlign: "center", marginLeft: "46rem", marginTop: "23rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.6)", width: "30rem", height: "9rem", color: "white", borderRadius: "5px" }}
+        <Modal sx={{ left: "35%", textAlign: "center", marginTop: "23rem", marginBottom: "3rem", bgcolor: "rgba(38, 7, 1, 0.6)", width: "30rem", height: "9rem", color: "white", borderRadius: "5px" }}
           open={modalVentaExitosa}
           onClose={abrirCerrarModalVentaExitosa}>
           {bodyVentaExitosa}

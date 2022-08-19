@@ -13,6 +13,7 @@ const dirPutProducto = Config.MOD_PRODUCTO; //Put
 const dirDelProducto = Config.BORRAR_PRODUCTO; //Delete
 const dirPostVenta = Config.CREAR_VENTA; //Post
 const dirPostDetalleVenta = Config.CREAR_DETALLE_VENTA; //Post
+const dirPutCantInv = Config.MOD_CAN_INV; //Put
 
 const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
     const res = await fetch(dirUsers + cedula + '/'); //Aqui se realiza la consulta al API
@@ -124,4 +125,17 @@ const postDetalleVenta = async (detalleVenta) => {
         })
 };
 
-export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto, postVenta, postDetalleVenta };
+const putCanInv = async (IdProducto, Cantidad) => {
+    console.log(dirPutCantInv, IdProducto, Cantidad);
+    await axios.put(dirPutCantInv + IdProducto, Cantidad)
+        .then(response => {
+            const resp = response.data; //retorna el resultado en formato json
+            console.log(resp);
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+};
+
+export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto, postVenta, postDetalleVenta, putCanInv };

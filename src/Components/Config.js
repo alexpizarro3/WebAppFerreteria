@@ -11,6 +11,7 @@ const BORRAR_PRODUCTO = process.env.REACT_APP_BORRAR_PRODUCTO
 const MOD_PRODUCTO = process.env.REACT_APP_MOD_PRODUCTO
 const CREAR_VENTA = process.env.REACT_APP_CREAR_VENTA
 const CREAR_DETALLE_VENTA = process.env.REACT_APP_CREAR_DETALLE_VENTA
+const MOD_CAN_INV = process.env.REACT_APP_MOD_INV
 
 export default {
     USERS,
@@ -26,6 +27,7 @@ export default {
     MOD_PRODUCTO,
     CREAR_VENTA,
     CREAR_DETALLE_VENTA,
+    MOD_CAN_INV,
 };
 
 
