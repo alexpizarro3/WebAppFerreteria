@@ -5,7 +5,7 @@ import Styledbackicon from './Styledbackicon';
 
 export default function MenuTop() {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1,}}>
             <AppBar position='static' color='transparent'>
                 <Container>
                     <Toolbar>

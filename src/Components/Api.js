@@ -13,7 +13,9 @@ const dirPutProducto = Config.MOD_PRODUCTO; //Put
 const dirDelProducto = Config.BORRAR_PRODUCTO; //Delete
 const dirPostVenta = Config.CREAR_VENTA; //Post
 const dirPostDetalleVenta = Config.CREAR_DETALLE_VENTA; //Post
+const dirPostCompra = Config.CREAR_COMPRA; //Post
 const dirPutCantInv = Config.MOD_CAN_INV; //Put
+const dirPostDetalleCompra = Config.CREAR_DETALLE_COMPRA; //Post
 
 const obtenerUsuario = async (cedula, password) => { //Funcion flecha que devuelve todos los usuarios del backend PERN
     const res = await fetch(dirUsers + cedula + '/'); //Aqui se realiza la consulta al API
@@ -125,6 +127,30 @@ const postDetalleVenta = async (detalleVenta) => {
         })
 };
 
+const postCompra = async (compra) => {
+    await axios.post(dirPostCompra, compra)
+        .then((response) => {
+            const resp = response.data; //retorna el resultado en formato json
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+};
+
+const postDetalleCompra = async (detalleCompra) => {
+    console.log(detalleCompra);
+    await axios.post(dirPostDetalleCompra, detalleCompra)
+        .then(response => {
+            const resp = response.data; //retorna el resultado en formato json
+            console.log(resp);
+            return resp; //retorna el resultado en formato json
+        }).catch(error => {
+            console.log(error);
+            return error;
+        })
+};
+
 const putCanInv = async (IdProducto, Cantidad) => {
     console.log(dirPutCantInv, IdProducto, Cantidad);
     await axios.put(dirPutCantInv + IdProducto, Cantidad)
@@ -138,4 +164,4 @@ const putCanInv = async (IdProducto, Cantidad) => {
         })
 };
 
-export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto, postVenta, postDetalleVenta, putCanInv };
+export { obtenerUsuarios, obtenerUsuario, postUser, putUser, delUser, obtenerProducto, obtenerProductos, postProducto, delProducto, putProducto, postVenta, postDetalleVenta, postCompra, postDetalleCompra, putCanInv };

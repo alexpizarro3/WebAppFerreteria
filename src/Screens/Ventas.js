@@ -109,17 +109,17 @@ const Ventas = () => {
 
   const handlePostVenta = async () => {
     if (rows.length === 0) {
-      sweetalert("Varios campos son necesarios favor revisar....", { icon: "error" });
+      sweetalert("No se han agregado items aun...", { icon: "error" });
     }
     else {
       await axios.post(dirPostVenta, venta)
-      .then((response) => {
-        const resp = response.data; //retorna el resultado en formato json
-        setIdVenta(resp.IdVenta);
-        handlePostDetalleVenta(resp.IdVenta);
-      }).catch(error => {
-        console.log(error);
-      })
+        .then((response) => {
+          const resp = response.data; //retorna el resultado en formato json
+          setIdVenta(resp.IdVenta);
+          handlePostDetalleVenta(resp.IdVenta);
+        }).catch(error => {
+          console.log(error);
+        })
     }
   };
 
@@ -138,7 +138,7 @@ const Ventas = () => {
       console.log(detalle);
       const res = await postDetalleVenta(detalle);
       console.log(res);
-      const response = await putCanInv(detalle.IdProducto,  {Cantidad : detalle.Cantidad*-1})
+      const response = await putCanInv(detalle.IdProducto, { Cantidad: detalle.Cantidad * -1 })
       console.log(response);
     });
     abrirCerrarModalVentaExitosa();
@@ -170,17 +170,17 @@ const Ventas = () => {
       <Typography variant="h1" component="div" gutterBottom sx={{ flexGrow: 1, fontSize: '25px', textAlign: 'center', color: 'white', bgcolor: "rgba(38, 7, 1, 0.6)", borderRadius: 1 }}>
         Ventas
       </Typography>
-      <Box sx={{ bgcolor: 'brown', borderRadius: 2 }}>
-        <TextField select value={idProducto} label="Productos" onChange={handleChange} type="search" sx={{ width: 258, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }}>
+      <Box sx={{ bgcolor: '#03045e', borderRadius: 2 }}>
+        <TextField select value={idProducto} label="Productos" onChange={handleChange} type="search" sx={{ color: "white", width: 258, margin: "0.5rem", "& label": { color: "white", fontSize: "18px" }, bgcolor: "#219ebc", borderRadius: 1, boxShadow: 10 }}>
           {listProd.map((option) => (
             <MenuItem key={option.IdProducto} value={option.IdProducto}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
-        <TextField label="Precio" value={prProducto} inputRef={textCantidad} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <TextField label="Cantidad" value={cantItem} defaultValue="0" type="number" onChange={cantProductos} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <TextField label="Subtotal" value={subTotalItem} onFocus={prcantChange} sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "18px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Precio" value={prProducto} inputRef={textCantidad} onFocus={prcantChange} sx={{ color: "white", width: 125, margin: "0.5rem", "& label": { color: "white", fontSize: "18px" }, bgcolor: "#219ebc", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Cantidad" value={cantItem} defaultValue="0" type="number" onChange={cantProductos} onFocus={prcantChange} sx={{ color: "white", width: 125, margin: "0.5rem", "& label": { color: "white", fontSize: "18px" }, bgcolor: "#219ebc", borderRadius: 1, boxShadow: 10 }} />
+        <TextField label="Subtotal" value={subTotalItem} onFocus={prcantChange} sx={{ color: "white", width: 125, margin: "0.5rem", "& label": { color: "white", fontSize: "18px" }, bgcolor: "#219ebc", borderRadius: 1, boxShadow: 10 }} />
         <TextField label="Tipo Venta" onChange={handleTipoVenta} InputProps={{
           endAdornment: (
             <datalist id="rfc">
@@ -192,9 +192,9 @@ const Ventas = () => {
             list: "rfc"
           }
         }}
-          sx={{ width: 125, margin: "0.5rem", "& label": { color: "black", fontSize: "14px" }, bgcolor: "orange", borderRadius: 1, boxShadow: 10 }} />
-        <Button variant='contained' onClick={handleAddRow} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", }} >Agregar</Button>
-        <Button variant='contained' onClick={handlePostVenta} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", bgcolor: "green" }} >Facturar</Button>
+          sx={{ width: 125, margin: "0.5rem", "& label": { color: "white", fontSize: "14px" }, bgcolor: "#219ebc", borderRadius: 1, boxShadow: 10 }} />
+        <Button variant='contained' onClick={handleAddRow} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", bgcolor: "#fb8500" }} >Agregar</Button>
+        <Button variant='contained' onClick={handlePostVenta} sx={{ margin: "0.5rem", height: "3.5rem", width: "8.8rem", bgcolor: "#ffb703" }} >Facturar</Button>
       </Box>
       <br />
       <DataGrid disableColumnFilter={true} sx={{ height: 400, bgcolor: 'white', align: 'center' }}
